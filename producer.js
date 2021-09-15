@@ -1,5 +1,6 @@
 console.log('Producer is running');
 import Kafka from 'node-rdkafka';
+var counter = 0;
 
 const stream = Kafka.Producer.createWriteStream({
     'metadata.broker.list': 'localhost:9092'
@@ -13,7 +14,7 @@ stream.on('error', (err) => {
 });
 
 function queueRandomMessage() {
-    const success = stream.write(Buffer.from('hi'));
+    const success = stream.write(Buffer.from(`${counter++}`));
     if (success) {
         console.log(`message queued successfully`);
     } else {
